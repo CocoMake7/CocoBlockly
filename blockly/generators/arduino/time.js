@@ -71,3 +71,124 @@ goog.require('Blockly.Arduino');
  Blockly.Arduino['infinite_loop'] = function(block) {
   return 'while(true);\n';
 };
+
+
+
+
+ Blockly.Arduino['cocokey_sendkeystroke'] = function(block) {
+
+  Blockly.Arduino.addInclude('cocokey', '#include <CocoKeyboard.h>');
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOKEY_STROKE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'CocoKeyboard.sendKeyStroke(' + keyStroke + ');\n';
+  return code;
+};
+
+
+
+ Blockly.Arduino['cocokey_delay'] = function(block) {
+
+  Blockly.Arduino.addInclude('cocokey', '#include <CocoKeyboard.h>');
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOKEY_DELAY', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'CocoKeyboard.delay(' + keyStroke + ');\n';
+  return code;
+};
+
+
+ Blockly.Arduino['cocokey_print'] = function(block) {
+
+  Blockly.Arduino.addInclude('cocokey', '#include <CocoKeyboard.h>');
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOKEY_PRINT', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'CocoKeyboard.print(' + keyStroke + ');\n';
+  return code;
+};
+
+
+ Blockly.Arduino['cocokey_update'] = function(block) {
+  Blockly.Arduino.addInclude('cocokey', '#include <CocoKeyboard.h>');
+  var code = "CocoKeyboard.update();\n";
+  return code;
+};
+
+
+
+ Blockly.Arduino['cocomidi_sendnote'] = function(block) {
+  Blockly.Arduino.addInclude('cocomidi', '#include <CocoMidi.h>');
+  Blockly.Arduino.addSetup('cocomidi', 'CocoMidi.init();\n', true);
+  var varNoteState = block.getFieldValue('COCOMIDI_STATE');
+
+  // var varNoteState = Blockly.Arduino.valueToCode(block, 'COCOMIDI_STATE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var varNoteChan  = Blockly.Arduino.valueToCode(block, 'COCOMIDI_CHAN' , Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var varNoteVel   = Blockly.Arduino.valueToCode(block, 'COCOMIDI_VEL'  , Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  var code = "CocoMidi.send(" + varNoteState + ',' + varNoteChan + ',' + varNoteVel +  ");\n";
+
+  return code;
+};
+
+
+ Blockly.Arduino['cocomidi_sendnote_var'] = function(block) {
+  Blockly.Arduino.addInclude('cocomidi', '#include <CocoMidi.h>');
+  Blockly.Arduino.addSetup('cocomidi', 'CocoMidi.init();\n', true);
+  var varNoteState = block.getFieldValue('COCOMIDI_STATE');
+
+  var varNoteState = Blockly.Arduino.valueToCode(block, 'COCOMIDI_STATE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var varNoteChan  = Blockly.Arduino.valueToCode(block, 'COCOMIDI_CHAN' , Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var varNoteVel   = Blockly.Arduino.valueToCode(block, 'COCOMIDI_VEL'  , Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  var code = "CocoMidi.send(" + varNoteState + ',' + varNoteChan + ',' + varNoteVel +  ");\n";
+
+  return code;
+};
+
+
+ Blockly.Arduino['cocomidi_sendcchires'] = function(block) {
+  Blockly.Arduino.addInclude('cocomidi', '#include <CocoMidi.h>');
+  Blockly.Arduino.addSetup('cocomidi', 'CocoMidi.init();\n', true);
+
+  var varNoteValue = Blockly.Arduino.valueToCode(block, 'COCOMIDI_VALUE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var varNoteChan  = Blockly.Arduino.valueToCode(block, 'COCOMIDI_CHAN' , Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  var code = "CocoMidi.sendCCHires(" + varNoteValue + ',' + varNoteChan + ");\n";
+
+  return code;
+};
+
+
+ Blockly.Arduino['cocomidi_delay'] = function(block) {
+
+  Blockly.Arduino.addInclude('cocomidi', '#include <CocoMidi.h>');
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOMIDI_DELAY', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'CocoMidi.delay(' + keyStroke + ');\n';
+  return code;
+};
+
+ Blockly.Arduino['cocomidi_update'] = function(block) {
+  Blockly.Arduino.addInclude('cocomidi', '#include <CocoMidi.h>');
+  Blockly.Arduino.addSetup('cocomidi', 'CocoMidi.init();\n', true);
+
+  var code = "CocoMidi.update();\n";
+  return code;
+};
+
+
+Blockly.Arduino['cocomidi_note_state'] = function(block) {
+  var dropdown_midi_note_state = block.getFieldValue('MIDI_NOTE_STATE');
+  // TODO: Assemble JavaScript into code variable.
+  var code = dropdown_midi_note_state;
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Arduino.ORDER_NONE];
+};
+
+// Blockly.Arduino['coco_interval_function'] = function(block) {
+//   var text_timer_name = block.getFieldValue('TIMER_NAME');
+//   var number_timer_interval = block.getFieldValue('TIMER_INTERVAL');
+//   var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
+//   // TODO: Assemble JavaScript into code variable.
+//   return statements_do_blocks;
+// };
+
+
