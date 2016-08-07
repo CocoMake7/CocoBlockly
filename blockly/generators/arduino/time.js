@@ -183,6 +183,127 @@ Blockly.Arduino['cocomidi_note_state'] = function(block) {
   return [code, Blockly.Arduino.ORDER_NONE];
 };
 
+
+Blockly.Arduino['cocomidi_read'] = function(block) {
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'COCOMIDI_DOREAD');
+
+  Blockly.Arduino.addInclude('cocomidi', '#include <CocoMidi.h>');
+  Blockly.Arduino.addSetup('cocomidi', 'CocoMidi.init();\n', true);
+
+
+    Blockly.Arduino.addDeclaration("cocomidi_message", "MIDIMessage message;\n");
+  // TODO: Assemble JavaScript into code variable.
+  var code = "if (CocoMidi.read(&message)) {\n" + statements_do_blocks + "\n}\n"
+  return code;
+};
+
+
+Blockly.Arduino['cocomidi_message'] = function(block) {
+  
+  Blockly.Arduino.addDeclaration("cocomidi_message", "MIDIMessage message;\n");
+
+  var dropdown_midi_note_state = block.getFieldValue('MIDI_MESSAGE');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'message.' + dropdown_midi_note_state;
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Arduino.ORDER_NONE];
+};
+
+
+Blockly.Arduino['cocomake_singlechar'] = function(block) {
+
+  var string = block.getFieldValue('TEXT');
+
+  string = string.replace(/\\/g, '\\\\')
+                 .replace(/\n/g, '\\\n')
+                 .replace(/\$/g, '\\$')
+                 .replace(/'/g, '\\\'');
+  var code = "'" + string + "'";
+
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+
+Blockly.Arduino['cocotouch_touched'] = function(block) {
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'COCOTOUCH_DOTOUCHED');
+
+
+var varInclude = 
+'#include <CocoTouch.h>' + 
+'\n#include <CocoTouchFilterSettingDefault.h>';
+
+var varDeclaration =  
+ '\n//filter settings  '  + 
+ '\nCocoTouchFilterSetting CocoFilter;  '  + 
+ '\n  '  + 
+ '\nint value = 0;  '  + 
+ '\nint prevValue = 0;  '  + 
+ '\nint velocityValue = 0;  '  + 
+ '\nint prevVelocity =  0;  '  + 
+ '\n  '  + 
+ '\nuint8_t note_off = 0;  '  + 
+ '\nuint16_t offset_adc = 0;  '  + 
+ '\n  '  + 
+ '\nchar key[] = {\' \'};  '  + 
+ '\nint keyTotal = 1;  '  + 
+ '\n  '  + 
+ '\nunsigned long previousMillis = 0; // will store last time LED was updated  '  + 
+ '\n  '  + 
+ '\nint keyCount = -1;  '  + 
+ '\nint ledPin = PB0;  '  + 
+ '\nint velocityThreshold = 80;  '  + 
+ '\n  '  + 
+ '\nint filtered_value = 0;  '  + 
+ '\nuint8_t pin_queue = 0;  '  + 
+ '\n  '  + 
+ '\n//cocoTouch pin  '  + 
+ '\n#define ADC_REF_PIN PB2  '  + 
+ '\n#define ADC_SENSE_PIN PB4  '  + 
+ '\n  '  + 
+ '\nvoid usb_poll()  '  + 
+ '\n{  '  + 
+ '\n  usbPoll();  '  + 
+ '\n}  ' ; 
+
+
+var varSetup = 
+ '\nCocoTouch.begin();  '  + 
+ '\nCocoTouch.setAdcSpeed(4);  '  + 
+ '\nCocoTouch.delay = 4;  '  + 
+ '\n//TeenyTouchDusjagr.delay_cb = &delay;  '  + 
+ '\nCocoTouch.usb_poll = &usb_poll;  '  + 
+ '\noffset_adc = CocoTouch.sense(ADC_SENSE_PIN, ADC_REF_PIN, 8 );  '  + 
+ '\n' ; 
+
+var varMaincode = 
+ '\nif (millis() - previousMillis >= 5)   // 0% data loss  '  + 
+ '\n{  '  + 
+ '\n  filtered_value = CocoTouchFilter_get(&CocoFilter);  '  + 
+ '\n  velocityValue = filtered_value - prevValue + 500;  '  + 
+ '\n  prevValue = filtered_value;  '  + 
+ '\n' + 
+ '\n' + statements_do_blocks +
+ '\n' + 
+ '\n  previousMillis = millis();  '  + 
+ '\n}  '  + 
+ '\n'  + 
+ '\nvalue = CocoTouch.sense(ADC_SENSE_PIN, ADC_REF_PIN, 7 ) - offset_adc;  '  + 
+ '\nif (value > 0) CocoTouchFilter_put(&CocoFilter, value);  '  + 
+ '\nprevVelocity = velocityValue;\n' ; 
+
+
+  Blockly.Arduino.addInclude('cocotouch_include', varInclude);
+  Blockly.Arduino.addDeclaration("cocotouch_declare", varDeclaration);
+  Blockly.Arduino.addSetup('cocotouch_setup', varSetup, true);
+
+  // TODO: Assemble JavaScript into code variable.
+  var code = varMaincode;
+  return code;
+};
+
+
 // Blockly.Arduino['coco_interval_function'] = function(block) {
 //   var text_timer_name = block.getFieldValue('TIMER_NAME');
 //   var number_timer_interval = block.getFieldValue('TIMER_INTERVAL');

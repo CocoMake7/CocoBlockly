@@ -160,6 +160,7 @@
     <sep></sep>
     <category id="catText" name="Text">
         <block type="text"></block>
+        <block type="cocomake_singlechar"></block>
         <block type="text_join"></block>
         <block type="text_append">
             <value name="TEXT">
@@ -369,7 +370,7 @@
             </value>
             <value name="COCOMIDI_CHAN">
                 <block type="math_number">
-                    <field name="NUM">0</field>
+                    <field name="NUM">1</field>
                 </block>
             </value>
         </block>
@@ -388,6 +389,8 @@
 
         <block type="cocomidi_update"></block>
         <block type="cocomidi_note_state"></block>
+        <block type="cocomidi_message"></block>        
+        <block type="cocomidi_read"></block>
 
         <block type="cocomidi_delay">
 
@@ -407,7 +410,17 @@
     </category>    
             <sep></sep>
     <category id="catCocoTouch" name="CocoTouch">
-        <block type="cocokey_update"></block>
+        <block type="cocotouch_touched"></block>
+  <block type="variables_get">
+    <field name="VAR">velocityValue</field>
+  </block>
+  <block type="variables_get">
+    <field name="VAR">prevVelocity</field>
+  </block>
+
+    <block type="variables_get">
+    <field name="VAR">filtered_value</field>
+  </block>
     </category>  
 </xml>
 

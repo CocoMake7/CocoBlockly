@@ -346,12 +346,97 @@ Blockly.Blocks['cocomidi_update'] = {
 Blockly.Blocks['cocomidi_note_state'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["MIDI NOTE ON", "MIDI_NOTE_ON"], ["MIDI NOTE OFF", "MIDI_NOTE_OFF"]]), "MIDI_NOTE_STATE");
+        .appendField(new Blockly.FieldDropdown([["midi note ON", "MIDI_NOTEON"], ["midi note OFF", "MIDI_NOTEOFF"]]), "MIDI_NOTE_STATE");
     this.setInputsInline(false);
     this.setOutput(true, null);
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['cocomidi_read'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("if there is new incoming midi message");
+    this.appendStatementInput("COCOMIDI_DOREAD")
+        .setCheck(null);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+        this.setColour(20);
+   this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+  }
+};
+
+Blockly.Blocks['cocomidi_message'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["midi message value", "value"], ["midi message key", "key"],  ["midi message command", "command"]]), "MIDI_MESSAGE");
+    this.setInputsInline(false);
+    this.setOutput(true, null);
+    this.setColour(230);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
+Blockly.Blocks['cocomake_singlechar'] = {
+  /**
+   * Block for text value.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl(Blockly.Msg.TEXT_TEXT_HELPURL);
+    this.setColour(Blockly.Blocks.texts.HUE);
+    this.appendDummyInput()
+        .appendField(this.newQuote_(true))
+        .appendField(new Blockly.FieldTextInput(''), 'TEXT')
+        .appendField(this.newQuote_(false));
+    this.setOutput(true, Blockly.Types.TEXT.output);
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    var thisBlock = this;
+    // Text block is trivial.  Use tooltip of parent block if it exists.
+    this.setTooltip(function() {
+      var parent = thisBlock.getParent();
+      return (parent && parent.getInputsInline() && parent.tooltip) ||
+          Blockly.Msg.TEXT_TEXT_TOOLTIP;
+    });
+  },
+  /**
+   * Create an image of an open or closed quote.
+   * @param {boolean} open True if open quote, false if closed.
+   * @return {!Blockly.FieldImage} The field image of the quote.
+   * @this Blockly.Block
+   * @private
+   */
+  newQuote_: function(open) {
+    if (open == this.RTL) {
+      var file = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg==';
+    } else {
+      var file = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC';
+    }
+    return new Blockly.FieldImage(file, 12, 12, '"');
+  },
+  /** @return {!string} Type of the block, text block always a string. */
+  getBlockType: function() {
+    return Blockly.Types.TEXT;
+  }
+};
+
+
+Blockly.Blocks['cocotouch_touched'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("after capacitive sensore measurement done do");
+    this.appendStatementInput("COCOTOUCH_DOTOUCHED")
+        .setCheck(null);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+        this.setColour(20);
+   this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
   }
 };
 

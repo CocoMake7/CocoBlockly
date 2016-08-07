@@ -21,13 +21,13 @@
 
 .blockly-panel {
   left: 8px;
-  right: 274px;
+  right: 350px;
   box-shadow: 0 1px 4px rgba(0,0,0,.37);
 }
 
 .output-panel {
   right: 8px;
-  width: 242px;
+  width: 320px;
   background-color: white;
   overflow: scroll;
   padding: 8px;
