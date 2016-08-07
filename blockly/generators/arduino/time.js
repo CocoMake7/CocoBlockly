@@ -304,12 +304,17 @@ var varMaincode =
 };
 
 
-// Blockly.Arduino['coco_interval_function'] = function(block) {
-//   var text_timer_name = block.getFieldValue('TIMER_NAME');
-//   var number_timer_interval = block.getFieldValue('TIMER_INTERVAL');
-//   var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
-//   // TODO: Assemble JavaScript into code variable.
-//   return statements_do_blocks;
-// };
+Blockly.Arduino['coco_interval_function'] = function(block) {
+  var text_timer_name = block.getFieldValue('TIMER_NAME');
+  var number_timer_interval = Blockly.Arduino.valueToCode(block, 'TIMER_INTERVAL', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
+  // TODO: Assemble JavaScript into code variable.
+
+  Blockly.Arduino.addDeclaration(text_timer_name, 'unsigned long ' +  text_timer_name + '_lastTime;\n');
+  var code = 'if (millis()- '+text_timer_name+'_lastTime >= ' + number_timer_interval + ')  {\n' + statements_do_blocks + ' ' + text_timer_name+'_lastTime = millis();\n' + '}\n';
+
+  return code;
+};
 
 

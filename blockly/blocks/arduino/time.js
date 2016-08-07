@@ -440,22 +440,27 @@ Blockly.Blocks['cocotouch_touched'] = {
   }
 };
 
-// Blockly.Blocks['coco_interval_function'] = {
-//   init: function() {
-//     this.appendDummyInput()
-//         .appendField("timer name")
-//         .appendField(new Blockly.FieldTextInput("default"), "TIMER_NAME");
-//     this.appendDummyInput()
-//         .appendField("every")
-//         .appendField(new Blockly.FieldNumber(0), "TIMER_INTERVAL")
-//         .appendField("milliseconds, do");
-//     this.appendStatementInput("DO_BLOCKS")
-//         .setCheck(null);
-//     this.setPreviousStatement(true, null);
-//     this.setNextStatement(true, null);
-//     this.setColour(20);
-//     this.setTooltip('');
-//     this.setHelpUrl('http://www.example.com/');
-//   }
-// };
+Blockly.Blocks['coco_interval_function'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("timer name")
+        .appendField(new Blockly.FieldTextInput("default"), "TIMER_NAME");
+    this.appendDummyInput()
+        .appendField("every")
+
+    this.appendValueInput('TIMER_INTERVAL')
+        .appendField("milliseconds");
+            this.setInputsInline(true);
+    this.appendDummyInput()
+        .appendField("do")
+
+    this.appendStatementInput("DO_BLOCKS")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(20);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
 
