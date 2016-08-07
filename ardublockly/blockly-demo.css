@@ -26,12 +26,13 @@
 }
 
 .output-panel {
-  right: 8px;
-  width: 320px;
+  right: 9px;
+  width: 330px;
   background-color: white;
-  overflow: scroll;
-  padding: 8px;
+  /* overflow: scroll; */
+  /* padding: 8px; */
   box-shadow: 0 1px 4px rgba(0,0,0,.37);
+  /* height: 100%; */
 }
 
 .dropdown-bar {
@@ -90,4 +91,23 @@
   padding: 0 !important;
 }
 
+.CodeMirror {
+  border: 1px solid #eee;
+/* Firefox */
+height: -moz-calc(100vh - 190px);
+/* WebKit */
+height: -webkit-calc(100vh - 190px);
+/* Opera */
+height: -o-calc(100vh - 190px);
+/* Standard */
+height: calc(100vh - 190px);
+}
 
+
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 100%;
+  color: black;
+  border: 0px;
+}

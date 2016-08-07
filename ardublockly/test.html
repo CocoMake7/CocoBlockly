@@ -6,8 +6,8 @@
   <!-- <script src="../blockly/blockly_compressed.js"></script> -->
   <!-- <script src="../blockly/blocks_compressed.js"></script> -->
   <!-- <script src="../blockly/arduino_compressed.js"></script> -->
-
-
+  
+  
   <script src="../blockly/blockly_uncompressed.js"></script>
   <script src="../blockly/blocks/logic.js"></script>
   <script src="../blockly/blocks/loops.js"></script>
@@ -56,19 +56,24 @@
   <link href="https://blockly-demo.appspot.com/static/demos/prettify.css" rel="stylesheet">
   <link rel="stylesheet" href="prettify/arduino.css">
 
-  <link href="blockly-demo.css" rel="stylesheet">
 
   <script src="ardublockly_toolbox.js"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/clike/clike.js"></script>
+
+  <link href="blockly-demo.css" rel="stylesheet">
 
 </head>
 <body>
 <div class="app-container">
   <div id="blocklyDiv" class="main blockly-panel"></div>
-  <div id="codeDiv" class="main output-panel">
+  <div id="" class="main output-panel">
+  <textarea id="codeDiv"></textarea>
     <!-- <hr class="POps"> -->
     <pre></pre>
   </div>
-  <div id="playButton" class="play-button material-icons">play_arrow</div>
 </div>
 
 
@@ -430,19 +435,49 @@
   var toolBox = document.getElementById('ArduBlocklyToolbox');
 
   var workspace = Blockly.inject('blocklyDiv',
-      {toolbox: toolBox});
+      {
+
+        toolbox: toolBox,
+            grid: {
+                spacing: 25,
+                length: 3,
+                colour: "#ccc",
+                snap: !0
+            },
+            zoom: {
+                controls: !0,
+                wheel: !1,
+                startScale: 1,
+                maxScale: 3,
+                minScale: .3,
+                scaleSpeed: 1.2
+            },
+            trashcan: !0
+      });
   var defaultBlocks = document.getElementById('blocklyDefault');
+
+  var cm = CodeMirror.fromTextArea(document.getElementById("codeDiv"), {
+    lineNumbers: true,
+    lineWrapping: true,
+    mode: "text/x-c++src"
+  });
+
 
   function myUpdateFunction(event) {
     // var languageDropdown = document.getElementById('languageDropdown');
     // var languageSelection = languageDropdown.options[languageDropdown.selectedIndex].value;
-    var codeDiv = document.getElementById('codeDiv');
-    var codeHolder = document.createElement('pre');
-    codeHolder.className = 'prettyprint but-not-that-pretty';
-    var code = document.createTextNode(Blockly.Arduino.workspaceToCode(workspace));
-    codeHolder.appendChild(code);
-    codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
-    prettyPrint();
+    // var codeDiv = document.getElementById('codeDiv');
+    // var codeHolder = document.createElement('pre');
+    // codeHolder.className = 'prettyprint but-not-that-pretty';
+    // var code = document.createTextNode(Blockly.Arduino.workspaceToCode(workspace));
+    // codeHolder.appendChild(code);
+    // codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
+
+    var doc = cm.getDoc();
+
+    cm.getDoc().setValue(Blockly.Arduino.workspaceToCode(workspace))
+
+    // prettyPrint();
   }
 
   workspace.addChangeListener(myUpdateFunction);
